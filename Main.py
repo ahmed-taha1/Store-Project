@@ -5,8 +5,9 @@ from tkinter import messagebox
 import tkinter as tk
 from tkinter.ttk import Notebook, Style
 
-file = open("accs.txt", "r+")
+file = open("F:/programming projects/python/store project/accs.txt", "r+")
 lines = file.readlines()
+file.close()
 #-----------functions ------------
 #--- w1 ---
 
@@ -22,12 +23,12 @@ def next1():
             w1.k=1
             file.truncate(0)
             messagebox.showinfo('done','please refill the text')
-            os.startfile("credit.txt")
+            os.startfile("F:/programming projects/python/store project/credit.txt")
 
         if (size!=0 and w1.i==size):
             w1.k+=1
             w1.i=0
-
+            
         v1.set(lines[w1.i])
         command = 'echo ' + lines[w1.i].strip() + '| clip'
         os.system(command)
@@ -36,10 +37,10 @@ def next1():
         Line1['text'] ="Line: "+ str(w1.i)
     except IndexError:
         messagebox.showinfo('done', 'please refill the text')
-        os.startfile("credit.txt")
+        os.startfile("F:/programming projects/python/store project/credit.txt")
 
 def clear():
-    file = open("credit.txt","r+")
+    file = open("F:/programming projects/python/store project/credit.txt","r+")
     file.truncate(0)
     w1.i=0
     w1.k=1
@@ -70,11 +71,11 @@ def back1():
     Line1['text'] = "Line: " + str(w1.i)
 
 def open1():
-    os.startfile("credit.txt")
+    os.startfile("F:/programming projects/python/store project/credit.txt")
 #--- w2 ---
 
 def copy2():
-    file = open("accs.txt","r+")
+    file = open("F:/programming projects/python/store project/accs.txt","r+")
     lines=file.readlines()
     command = 'echo ' + lines[w2.ii-1].strip() + '| clip'
     os.system(command)
@@ -82,27 +83,29 @@ def copy2():
 def done2():
     top.size-=1
     w2.ii-=1
-    remaining['text']="remaining: "+str(top.size)
+    # read lines in list
+    lines = []
+    file = open("F:/programming projects/python/store project/accs.txt", "r+")
+    lines = file.readlines()
+    file.close()
+    # update data
     Line2['text'] ="Line: "+ str(w2.ii)
     w2.done['text'] = "Done"
-    file = open("accs.txt", "r+")
-    lines = file.readlines()
-    with open('accs.txt', 'a') as the_file:
-        the_file.write(lines[0])
-    file.seek(0)
-    file.truncate()
-    file.writelines(lines[1:])
+    # write lines except read files
+    file = open("F:/programming projects/python/store project/accs.txt", "w")
+    for number, line in enumerate(lines):
+        if number not in[w2.ii]:
+            file.write(line)
+    remaining['text']="remaining: "+str(number)
 
 def next2():
 
-    file = open("accs.txt","r+")
+    file = open("F:/programming projects/python/store project/accs.txt","r+")
     lines=file.readlines()
     size=len(lines)
 
     if(w2.ii==size):
-        w2.ii=0
-        file.truncate(0)
-        messagebox.showinfo('done','please refill the accounts')
+        messagebox.showinfo('error','you are at the end of the file')
     else:
         command = 'echo ' + lines[w2.ii].strip() + '| clip'
         os.system(command)
@@ -112,9 +115,8 @@ def next2():
 
 def back2():
     w2.ii-=2
-    file = open("accs.txt","r+")
+    file = open("F:/programming projects/python/store project/accs.txt","r+")
     lines=file.readlines()
-
     command = 'echo ' + lines[w2.ii].strip() + '| clip'
     os.system(command)
     v2.set(lines[w2.ii])
@@ -122,19 +124,18 @@ def back2():
     Line2['text'] ="Line: "+ str(w2.ii)
 
 def count2():
-    with open(r"accs.txt", 'r') as fp:
+    with open(r"F:/programming projects/python/store project/accs.txt", 'r') as fp:
         for count, line in enumerate(fp):
             pass
     remaining['text']="remaining: "+str(count + 1)
     
 def open2():
-    os.startfile("accs.txt")
+    os.startfile("F:/programming projects/python/store project/accs.txt")
 
-    
 #--- w3 ---
 
 def copy3():
-    file = open("GamersGangStore.txt","r+")
+    file = open("F:/programming projects/python/store project/GamersGangStore.txt","r+")
     lines=file.readlines()
     command = 'echo ' + lines[w3.ii-1].strip() + '| clip'
     os.system(command)
@@ -144,9 +145,9 @@ def done3():
     w3.ii-=1
     Line3['text'] ="Line: "+ str(w3.ii)
     w3.done['text'] = "Done"
-    file = open("GamersGangStore.txt", "r+")
+    file = open("F:/programming projects/python/store project/GamersGangStore.txt", "r+")
     lines = file.readlines()
-    with open('accs.txt', 'a') as the_file:
+    with open('F:/programming projects/python/store project/GamersGangStore.txt', 'a') as the_file:
         the_file.write(lines[0])
     file.seek(0)
     file.truncate()
@@ -156,7 +157,7 @@ def done3():
 def next3():
 
     w3.done['text'] =""
-    file = open("GamersGangStore.txt","r+")
+    file = open("F:/programming projects/python/store project/GamersGangStore.txt","r+")
     lines=file.readlines()
     size=len(lines)
     if(w3.ii==size):
@@ -174,7 +175,7 @@ def next3():
 
 def back3():
     w3.done['text'] =""
-    file = open("GamersGangStore.txt","r+")
+    file = open("F:/programming projects/python/store project/GamersGangStore.txt","r+")
     lines=file.readlines()
     size=len(lines)
 
@@ -182,7 +183,7 @@ def back3():
         w3.ii=0
         file.truncate(0)
         messagebox.showinfo('done','please refill the text')
-        os.startfile("credit.txt")
+        os.startfile("F:/programming projects/python/store project/credit.txt")
     else:
         w3.ii -= 2
         command = 'echo ' + lines[w3.ii].strip() + '| clip'
@@ -192,7 +193,7 @@ def back3():
     Line3['text'] = "Line: " + str(w3.ii)
     
 def open3():
-    os.startfile("GamersGangStore.txt")
+    os.startfile("F:/programming projects/python/store project/GamersGangStore.txt")
 
 
 def pw():
@@ -239,7 +240,7 @@ style.theme_create( "dummy", parent="alt", settings={
                           "expand": [("selected", [1, 1, 1, 0])] } } } )
 style.theme_use("dummy")
 
-top.iconbitmap('visa.ico')
+top.iconbitmap('F:/programming projects/python/store project/visa.ico')
 
 #--- varaibles ---
 
